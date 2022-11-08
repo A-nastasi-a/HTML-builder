@@ -9,6 +9,22 @@ fs.mkdir(path.join(__dirname, 'files-copy'), { recursive: true }, err => {
 
 const pathToResultDir = path.join(__dirname, 'files-copy');
 
+async function clearFolder() {
+    try {
+        const oldFiles = await fs.promises.readdir(path.join(__dirname, 'files-copy'), { withFileTypes: true });
+        for (const oldFile of oldFiles) {
+            fs.unlink(path.join(__dirname, 'files-copy', oldFile.name), err => {
+                if (err) throw err;
+            });
+        }
+        copyingFiles();
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
 async function copyingFiles() {
     try {
         const files = await fs.promises.readdir(pathToDir, { withFileTypes: true });
@@ -21,5 +37,5 @@ async function copyingFiles() {
         console.error(err);
     }
 };
-
-copyingFiles();
+clearFolder();
+// copyingFiles();
