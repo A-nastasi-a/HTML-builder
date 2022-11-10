@@ -10,6 +10,7 @@ stdout.write('Приветствую!\nВведите что-нибудь:\n');
 stdin.on('data', data => {
     const textData = data.toString();
     if (textData.indexOf('exit') > -1) {
+        console.log('До свидания!');
         process.exit();
     } else {
         fs.appendFile(
